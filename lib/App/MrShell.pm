@@ -1,7 +1,6 @@
 package App::MrShell;
 use Moose;
 
-use Carp;
 use POSIX;
 use Config::Tiny;
 use POE qw( Wheel::Run );
@@ -221,7 +220,7 @@ sub set_logfile_option {
     }
 
     open my $log, ( $trunc ? ">" : ">>" ), $file
-        or croak "couldn't open $file for write: $!"
+        or confess "couldn't open $file for write: $!"
         ;                 ## no critic -- I mean to pass this around, shut up
 
     $this->{_log_fh} = App::MrShell::ANSIFilter::filtered_handle($log);
@@ -350,7 +349,7 @@ sub queue_command {
 
             }
             else {
-                croak "set_hosts before issuing queue_command";
+                confess "set_hosts before issuing queue_command";
             }
         }
     }
